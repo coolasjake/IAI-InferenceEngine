@@ -243,12 +243,12 @@ namespace InferenceEngine
             return elements.ToArray();
         }
 
-        private Preposition FindImplication(string[] elements)
+        private Preposition FindImplication(List<string> elements)
         {
-            if (elements.Length == 0)
+            if (elements.Count == 0)
                 throw new Exception("Too few elements to generate rule");
 
-            if (elements.Length == 1)
+            if (elements.Count == 1)
             {
                 symbols.Add(elements[0]);
                 return new Symbol(elements[0]); ;
@@ -259,7 +259,6 @@ namespace InferenceEngine
                 logicalEs.Add(new PrepGen(element));
             //Preposition[] logic = new Preposition[elements.Length];
             //bool[] isChild = new bool[elements.Length];
-            //Brackets
 
             //Find symbols
             /*
@@ -272,6 +271,24 @@ namespace InferenceEngine
                 }
             }
             */
+
+            //Brackets
+            for (int i = 0; i < logicalEs.Count; ++i)
+            {
+                if (logicalEs[i]._strRep == "(")
+                {
+                    int a;
+                    for (a = logicalEs.Count - 1; a > i; --a)
+                    {
+                        if (logicalEs[i]._strRep == ")")
+                            break;
+                    }
+                    logicalEs[i]._p = FindImplication(elements.GetRange(i + 1, i - a - 1));
+                    logicalEs[a]._used = true;
+                }
+            }
+
+
             //Find Not-connections
             for (int i = 0; i < elements.Length; ++i)
             {
@@ -350,16 +367,16 @@ namespace InferenceEngine
 
         private class PrepGen
         {
-            public string _element;
+            public string _strRep;
             public Preposition _p;
-            public bool _isChild = false;
+            public bool _used = false;
 
-            public PrepGen(string element)
+            public PrepGen(string strRep)
             {
-                _element = element;
+                _strRep = strRep;
 
-                if (_element != "=>" && _element != "&" && _element != "|" && _element != "~" && _element != "<=>")
-                    _p = new Symbol(element);
+                if (_strRep != "=>" && _strRep != "&" && _strRep != "|" && _strRep != "~" && _strRep != "<=>")
+                    _p = new Symbol(strRep);
             }
 
 
