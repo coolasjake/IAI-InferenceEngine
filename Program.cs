@@ -49,7 +49,10 @@ namespace InferenceEngine
                 else if (lines[i] == "RESET")
                 {
                     if (LOG)
+                    {
                         Console.WriteLine("Resetting KB");
+                        Console.WriteLine();
+                    }
                     model = GetModel(method);
                 }
                 else if (lines[i] == "LOG")

@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BCModel.cs" />
+    <Compile Include="HornModel.cs" />
     <Compile Include="FCModel.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Program.cs" />
