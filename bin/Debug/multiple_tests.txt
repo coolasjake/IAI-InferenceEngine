@@ -1,3 +1,4 @@
+LOG
 TELL
 (a <=> (c => d)) & b & (b => a); c; ~f || g;
 ASK
@@ -5,7 +6,7 @@ d
 RESET
 
 TELL
-(a <=> (c => d)) & b & (b => a); c; ~f || g;
+(a <=> (c => d)) & ~b & (b => a); c; ~f || g;
 ASK
 d
 RESET
