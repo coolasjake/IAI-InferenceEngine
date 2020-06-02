@@ -38,7 +38,10 @@ namespace InferenceEngine
                 {
                     model.Tell(lines[i + 1]);
                     if (LOG)
+                    {
+                        Console.Write("Telling. KB is now: ");
                         model.PrintRules();
+                    }
                 }
                 else if (lines[i] == "ASK" && lines.Count > i + 1)
                 {

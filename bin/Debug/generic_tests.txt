@@ -1,0 +1,31 @@
+LOG
+
+TELL
+(A & B) => ~E; (~C & D) => ~F; (~E & ~F) => G; A; B; ~C; D;
+ASK
+G
+RESET
+
+TELL
+(A || B) => ~E; (~C || D) => ~F; (~E || ~F) => G; A; B; ~C; D;
+ASK
+G
+RESET
+
+TELL
+(A <=> B) => E; ~(C <=> D) => F; (E <=> F) => G; ~A; ~B; ~C; D;
+ASK
+G
+RESET
+
+TELL
+(A => B) => E; (~C => D) => F; (~E => ~F) => G; A; B; C; D;
+ASK
+G
+RESET
+
+TELL
+(a <=> (c => d)) & b & (b => a); c; ~f || g;
+ASK
+d
+RESET

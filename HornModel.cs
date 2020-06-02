@@ -104,6 +104,8 @@ namespace InferenceEngine
                 {
                     if (literalsSolutions[i] == SymbolIs.True)
                         Console.Write(literalsKey[i] + ", ");
+                    if (literalsSolutions[i] == SymbolIs.False)
+                        Console.Write("~" + literalsKey[i] + ", ");
                 }
                 Console.WriteLine();
             }
@@ -126,10 +128,10 @@ namespace InferenceEngine
         public HornRule(string ruleAsText)
         {
             debugTextVersion = ruleAsText.Trim();
-            _rule = FindImplication(GenerateElements(debugTextVersion));
+            _rule = FindHornRule(GenerateElements(debugTextVersion));
         }
 
-        protected override Proposition FindImplication(List<string> elements)
+        protected Proposition FindHornRule(List<string> elements)
         {
             Proposition totalRule = base.FindImplication(elements);
             if (totalRule is Implies) {

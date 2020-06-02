@@ -1,0 +1,36 @@
+LOG
+TELL
+p2=> p3; p3 => p1; c => e; b||e => f; f&g => h; p1=>d; p1&p3 => c; a; b; p2;
+ASK
+d
+RESET
+
+TELL
+(It_Rains & ~I_Have_Umbrella)=> I_Get_Wet; It_Rains; ~I_Have_Umbrella;
+ASK
+I_Get_Wet
+RESET
+
+TELL
+(It_Rains & ~I_Have_Umbrella)=> I_Get_Wet; It_Rains; I_Have_Umbrella;
+ASK
+I_Get_Wet
+RESET
+
+TELL
+(It_Rains & (~I_Have_Umbrella || Umbrella_Is_Broken))=> I_Get_Wet; It_Rains & Windy => Umbrella_Is_Broken; It_Rains; I_Have_Umbrella; Windy;
+ASK
+I_Get_Wet
+RESET
+
+TELL
+~(A&~B&~(C||B)) => D; A=>B; B=>C; A=>D; A=>E; A;
+ASK
+D
+RESET
+
+TELL
+~(A&~B&~(C||B)) => D; A=>B; B=>C; A=>D; A=>E; A;
+ASK
+E
+RESET

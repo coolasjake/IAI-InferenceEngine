@@ -189,6 +189,8 @@ namespace InferenceEngine
                                 break;
                         }
                     }
+                    if (a == logicalEs.Count)
+                        throw new Exception("Missing closing bracket");
                     logicalEs[i]._p = FindImplication(elements.GetRange(i + 1, a - i - 1));
                     for (int j = i + 1; j <= a; ++j)
                         logicalEs[j].Use();
@@ -283,7 +285,7 @@ namespace InferenceEngine
                     int a, b;
                     for (a = i - 1; a > 0; --a)
                     {
-                        if (!logicalEs[a].Used == false)
+                        if (!logicalEs[a].Used)
                             break;
                     }
                     for (b = i + 1; b < logicalEs.Count; ++b)
@@ -465,7 +467,7 @@ namespace InferenceEngine
         }
 
         /// <summary> Propositional class which logically represents a Biconditional (k=>)*. Contains two child prepositions: fact1 and fact2. </summary>
-        // *cannot use < symbol in summary comment
+        // *cannot use < symbol in summary comment. Should be <=>.
         public class BiConditional : Proposition
         {
             private Proposition _fact1;
@@ -504,21 +506,13 @@ namespace InferenceEngine
                 SymbolIs sol1 = _fact1.CheckSolvable(key, state);
                 SymbolIs sol2 = _fact2.CheckSolvable(key, state);
 
-                //If either is false resolve to Not-True, if both are true resolve to True.
-                if (sol1 == SymbolIs.False || sol2 == SymbolIs.False)
-                    return new Not(new True());
-                else if (sol1 == SymbolIs.True && sol2 == SymbolIs.True)
+                //If the either fact is Unknown return this, otherwise resolve to True if they are the same, or false if they are different.
+                if (sol1 == sol2 && sol1 != SymbolIs.Unknown)
                     return new True();
+                else if (sol1 != SymbolIs.Unknown && sol2 != SymbolIs.Unknown)
+                    return new Not(new True());
                 else
-                {
-                    //If one of the facts can be proved true, it can be removed from the logic.
-                    if (sol1 == SymbolIs.True)
-                        return _fact2;
-                    else if (sol2 == SymbolIs.True)
-                        return _fact1;
-                    else
-                        return this;
-                }
+                    return this;
             }
 
             public override string ToString()

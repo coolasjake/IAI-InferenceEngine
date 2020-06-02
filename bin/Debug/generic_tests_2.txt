@@ -1,0 +1,6 @@
+LOG
+
+TELL
+(A <=> B) => C; (~A <=> B) => C; B;
+ASK
+(B <=> C)

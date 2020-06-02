@@ -132,16 +132,16 @@ namespace InferenceEngine
                                         throw new Exception("KnowledgeBase is contradictory");
                                 }
                             }
-
-                            //If the query has been proven, return either true or false based on the outcome.
-                            SymbolIs solution = query.CheckSolved(literalsKey, literalsSolutions);
-                            if (solution == SymbolIs.True)
-                                return 1;
-                            else if (solution == SymbolIs.False)
-                                return 0;
                         }
                     }
                 }
+
+                //If the query has been proven, return either true or false based on the outcome.
+                SymbolIs solution = query.CheckSolved(literalsKey, literalsSolutions);
+                if (solution == SymbolIs.True)
+                    return 1;
+                else if (solution == SymbolIs.False)
+                    return 0;
             } //End of While loop
             return 0;
         }
